@@ -1,0 +1,30 @@
+{
+    "name": "svsoft/yii2-backup",
+    "description": "Backup module for Yii 2. Create and restore backups",
+    "keywords": [
+        "yii2",
+        "backup",
+        "dump"
+    ],
+    "type": "yii2-extension",
+    "license": "GNU",
+    "authors": [
+        {
+            "name": "Shiryakov Viktor",
+            "email": "shiryakovv@gmail.com",
+            "role": "Creator"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/svsoft/yii2-backup"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "svsoft\\yii\\backup\\": ""
+        }
+    }
+}
