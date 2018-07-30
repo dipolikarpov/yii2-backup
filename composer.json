@@ -7,7 +7,7 @@
         "dump"
     ],
     "type": "yii2-extension",
-    "license": "GNU",
+    "license": "MIT",
     "authors": [
         {
             "name": "Shiryakov Viktor",
