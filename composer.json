@@ -19,8 +19,9 @@
         "source": "https://github.com/svsoft/yii2-backup"
     },
     "require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2": "*"
+        "php": ">=5.6.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-httpclient": "*"
     },
     "autoload": {
         "psr-4": {

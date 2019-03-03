@@ -14,7 +14,7 @@ use yii\helpers\FileHelper;
  */
 class BackupModule extends Module
 {
-	public $controllerNamespace = __NAMESPACE__ . 'controllers';
+	public $controllerNamespace = __NAMESPACE__ . '\controllers';
 
     /** @var string Path/Alias to folder for backups storing. e.g. "@app/backups" */
     public $backupsFolder;
@@ -100,11 +100,15 @@ class BackupModule extends Module
      */
     public $createGitIgnore = true;
 
+    public $accessToken = null;
+
 	public function init() {
+
 	    parent::init ();
 
 		if (Yii::$app instanceof \yii\console\Application)
 			$this->controllerNamespace = __NAMESPACE__ . '\commands';
+
 
         $this->backupsFolder = Yii::getAlias($this->backupsFolder);
 
@@ -154,4 +158,6 @@ class BackupModule extends Module
     {
         return $this->get('backup');
     }
+
+
 }
