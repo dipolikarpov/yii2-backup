@@ -114,7 +114,7 @@ class BackupModule extends Module
 
         if (empty($this->components['backup']))
             $this->set('backup', [
-                'class' => 'svsoft\yii\backup\services\Backup',
+                'class' => Backup::class,
                 'backupsFolder'     => $this->backupsFolder,
                 'backupFilename'    => $this->backupFilename,
                 'directories'       => $this->directories,

@@ -3,6 +3,7 @@ namespace svsoft\yii\backup\controllers;
 
 use svsoft\yii\backup\BackupModule;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -15,15 +16,15 @@ class DownloadController extends Controller
     public function actionIndex($name, $token)
     {
         if (!$this->module->accessToken)
-            throw new NotFoundHttpException('Access token is not set');
+            throw new ForbiddenHttpException('Access token is not set');
 
         if ($this->module->accessToken !== $token)
-            throw new NotFoundHttpException('Page not found');
+            throw new ForbiddenHttpException('Access token is wrong');
+
+        if (!$this->module->backup->hasBackup($name))
+            throw new NotFoundHttpException('File not found');
 
         $filePath = $this->module->backupsFolder . '/' . $name;
-
-        if (!file_exists($filePath))
-            throw new NotFoundHttpException('Page not found');
 
         return \Yii::$app->response->sendFile($filePath);
     }

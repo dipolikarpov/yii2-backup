@@ -126,6 +126,11 @@ class Backup extends Component
         return $files;
     }
 
+    public function hasBackup($filename)
+    {
+        return (bool)FileHelper::findFiles($this->backupsFolder, ['only' => [$filename], 'recursive' => false]);
+    }
+
 
     /**
      * Generate backup name
