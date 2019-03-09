@@ -2,6 +2,7 @@
 namespace svsoft\yii\backup\commands;
 
 use svsoft\yii\backup\BackupModule;
+use svsoft\yii\backup\exceptions\BackupDirectoryNotExistException;
 use svsoft\yii\backup\exceptions\BackupModuleException;
 use yii\console\Controller;
 use yii\helpers\Console;
@@ -28,8 +29,33 @@ class DownloadController extends Controller
     {
         try
         {
+            $backup = $this->module->backup;
+        }
+        catch(BackupDirectoryNotExistException $e)
+        {
+            if (!$this->confirm('Backup directory does not exist, create?'))
+                return;
+
+            return $this->actionIndex($url, $name, $token);
+        }
+        catch(BackupModuleException $e)
+        {
+            $this->stderr($e->getMessage() . PHP_EOL);
+            return;
+        }
+
+        try
+        {
             if ($token === null)
                 $token = $this->module->accessToken;
+
+            if ($backup->hasBackup($name))
+            {
+                if (!$this->confirm("File {$name} already exist, overwrite it?"))
+                {
+                    return;
+                }
+            }
 
             $url = "{$url}/backup/download";
 
@@ -40,7 +66,6 @@ class DownloadController extends Controller
                 ->setUrl($url)
                 ->setData(['name' => $name, 'token' => $token])
                 ->send();
-
 
             if (!$response->isOk)
             {
@@ -61,15 +86,6 @@ class DownloadController extends Controller
             }
 
             $filePath = $this->module->backupsFolder . '/' . $name;
-
-            if (file_exists($filePath))
-            {
-                if (!$this->confirm("File {$name} already exist, overwrite it?"))
-                {
-                    return;
-                }
-
-            }
 
             file_put_contents($filePath, $response->content);
 
