@@ -36,6 +36,7 @@ class DownloadController extends Controller
             if (!$this->confirm('Backup directory does not exist, create?'))
                 return;
 
+            $this->module->createBackupFolder();
             return $this->actionIndex($url, $name, $token);
         }
         catch(BackupModuleException $e)
